@@ -8,11 +8,13 @@
  */
 var Calculator = function(){
 
+
+
     /**
      * doOperations is a function that call 4 math functions.
      */
     this.doOperations = function(){
-        console.log('SUM is: ', this.getSum(arguments.length - 1, arguments));
+        console.log('SUM is: ', this.getSum(arguments));
         console.log('MAX is: ', this.getMax(arguments.length, arguments, 0));
         console.log('MIN is: ', this.getMin(arguments.length, arguments, 999999));
         console.log('AVG is: ', this.getAvg(arguments.length, arguments, 0));
@@ -24,14 +26,20 @@ var Calculator = function(){
      * @param list
      * @returns {*}
      */
-    this.getSum = function(index, list){
+    this.getSum = function(){
 
-        if(index >= 0){
-            return list[index] + this.getSum(index - 1, list);
+        function _getSum(index, list) {
+            if (index > 0) {
+                return list[index] + getSumIn(index - 1, list);
+            }
+            else {
+                return list[index];
+            }
         }
-        else{
-            return 0;
-        }
+
+        return (arguments.length === 1) ?
+            (arguments[1] === "undefined" ? arguments[0] : _getSum(arguments[0].length - 1, arguments[0])) :
+            (arguments.length === 0 ? 0 : _getSum(arguments.length - 1, arguments));
     };
 
     /**
