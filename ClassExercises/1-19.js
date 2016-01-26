@@ -15,9 +15,9 @@ var Calculator = function(){
      */
     this.doOperations = function(){
         console.log('SUM is: ', this.getSum(arguments));
-        console.log('MAX is: ', this.getMax(arguments.length, arguments, 0));
-        console.log('MIN is: ', this.getMin(arguments.length, arguments, 999999));
-        console.log('AVG is: ', this.getAvg(arguments.length, arguments, 0));
+        console.log('MAX is: ', this.getMax(arguments));
+        console.log('MIN is: ', this.getMin(arguments));
+        console.log('AVG is: ', this.getAvg(arguments));
     };
 
     /**
@@ -30,7 +30,7 @@ var Calculator = function(){
 
         function _getSum(index, list) {
             if (index > 0) {
-                return list[index] + getSumIn(index - 1, list);
+                return list[index] + _getSum(index - 1, list);
             }
             else {
                 return list[index];
@@ -49,40 +49,62 @@ var Calculator = function(){
      * @param max this store the maximum value to each cycle.
      * @returns {*}
      */
-    this.getMax = function(index, list, max){
-        if(index > 0){
-            if(max > list[index - 1])
-                return this.getMax(index - 1, list, max);
-            else
-                return this.getMax(index - 1, list, list[index - 1]);
+    this.getMax = function(){
+
+        function _getMax(index, list, max) {
+            if (index > 0) {
+                if (max > list[index - 1])
+                    return _getMax(index - 1, list, max);
+                else
+                    return _getMax(index - 1, list, list[index - 1]);
+            }
+            else {
+                return max;
+            }
         }
-        else{
-            return max;
-        }
+
+        return (arguments.length === 1) ?
+            (arguments[1] === "undefined" ? arguments[0] : _getMax(arguments[0].length, arguments[0], 0)) :
+            (arguments.length === 0 ? 0 : _getMax(arguments.length, arguments, 0));
+
     };
 
-    this.getMin = function(index, list, min){
-        if(index > 0){
-            if(min < list[index - 1])
-                return this.getMin(index - 1, list, min);
-            else
-                return this.getMin(index - 1, list, list[index - 1]);
+    this.getMin = function(){
+
+        function _getMin(index, list, min) {
+            if (index > 0) {
+                if (min < list[index - 1])
+                    return _getMin(index - 1, list, min);
+                else
+                    return _getMin(index - 1, list, list[index - 1]);
+            }
+            else {
+                return min;
+            }
         }
-        else{
-            return min;
-        }
+
+        return (arguments.length === 1) ?
+            (arguments[1] === "undefined" ? arguments[0] : _getMin(arguments[0].length, arguments[0], 999999)) :
+            (arguments.length === 0 ? 0 : _getMin(arguments.length, arguments, 999999));
     };
 
-    this.getAvg = function(qty, arg, index)
+    this.getAvg = function()
     {
-        if (index == qty - 1) {
-            return arg[index];
+        function _getAvg(qty, arg, index){
+            if (index == qty - 1) {
+                return arg[index];
+            }
+
+            if (index == 0)
+                return ((arg[index] + _getAvg(qty, arg, index + 1)) / qty);
+            else
+                return (arg[index] + _getAvg(qty, arg, index + 1));
         }
 
-        if (index == 0)
-            return ((arg[index] + this.getAvg(qty, arg, index + 1)) / qty);
-        else
-            return (arg[index] + this.getAvg(qty, arg, index + 1));
+        return (arguments.length === 1) ?
+            (arguments[1] === "undefined" ? arguments[0] : _getAvg(arguments[0].length, arguments[0], 0)) :
+            (arguments.length === 0 ? 0 : _getAvg(arguments.length, arguments, 0));
+
     };
 
 
