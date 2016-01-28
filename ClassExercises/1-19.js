@@ -38,7 +38,7 @@ var Calculator = function(){
         }
 
         return (arguments.length === 1) ?
-            (arguments[1] === "undefined" ? arguments[0] : _getSum(arguments[0].length - 1, arguments[0])) :
+            (arguments[0][1] === "undefined" ? arguments[0] : _getSum(arguments[0].length - 1, arguments[0])) :
             (arguments.length === 0 ? 0 : _getSum(arguments.length - 1, arguments));
     };
 
