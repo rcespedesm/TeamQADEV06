@@ -15,9 +15,9 @@ var testRegExp = function(test){
 
 
 /**
- *
- * @param minNumber
- * @param maxNumber
+ *this function is to find the first capicua in a range of numbers
+ * @param minNumber  lower rank
+ * @param maxNumber  higher
  * @returns {*}
  */
 var verifyCapicua = function(minNumber, maxNumber){
@@ -29,6 +29,11 @@ var verifyCapicua = function(minNumber, maxNumber){
     return i;
 };
 
+/**
+ * This function is to verify if a number is capicua.
+ * @param number
+ * @returns {boolean}
+ */
 var isCapicua = function(number){
     var strNumber = number.toString();
     var strcapicua = "";
